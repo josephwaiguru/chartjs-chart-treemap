@@ -135,7 +135,6 @@ var Controller = Chart.DatasetController.extend({
 		item._datasetIndex = datasetIndex;
 		item._index = index;
 		item.hidden = h <= options.spacing || w <= options.spacing;
-
 		item._model = {
 			x: x,
 			base: y - halfH,
@@ -167,7 +166,8 @@ var Controller = Chart.DatasetController.extend({
 		for (i = 0, ilen = metadata.length; i < ilen; ++i) {
 			rect = metadata[i];
 			vm = rect._view;
-			item = data[i];
+			item = data[i];			
+			const chartSize = Math.sqrt(vm.w*vm.w + vm.h*vm.h);
 			if (!rect.hidden) {
 				rect.draw();
 				if (drawCaption(vm, vm.font) && item.g) {
@@ -180,7 +180,7 @@ var Controller = Chart.DatasetController.extend({
 					if (!('l' in item) || item.l === levels) {
 						ctx.textAlign = 'center';
 						ctx.textBaseline = 'middle';
-						ctx.fillText(item.g, vm.left + vm.width / 2, vm.top + vm.height / 2);
+						ctx.fillText(chartSize > 100 ? item.g : '', vm.left + vm.width / 2, vm.top + vm.height / 2);
 					} else {
 						ctx.textAlign = 'start';
 						ctx.textBaseline = 'top';
